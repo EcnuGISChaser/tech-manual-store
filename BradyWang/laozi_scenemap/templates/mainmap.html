@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>全国老子相关景区检索平台</title>
+  <link rel="stylesheet" type="text/css" href="../static/content/main.css" />
+
+  <script type="text/javascript" src="../static/scripts/jquery-3.6.0.js"></script>
+  <script type="text/javascript" src="../static/scripts/vue.js"></script>
+  <script type="text/javascript" src="../static/scripts/axios.min.js"></script>
+
+
+  <!-- 引入样式 -->
+  <link rel="stylesheet" type="text/css" href="../static/element-ui/index.css">
+  <!-- 引入组件库 -->
+  <script type="text/javascript" src="../static/element-ui/index.js"></script>
+
+  <script type="text/javascript" src="../static/scripts/echarts/echarts.js"></script>
+
+
+  <script type="text/javascript">
+    window._AMapSecurityConfig = {
+      securityJsCode: 'b1c503f2ee48cb05fec12de633a3e2d1',
+    }
+  </script>
+  <script src='https://webapi.amap.com/maps?v=2.0&key=c57567c14a486d93390a1001cb31c927'></script>
+  <!-- <script src="https://webapi.amap.com/loader.js"></script> -->
+  <script src="//webapi.amap.com/ui/1.1/main.js?v=1.1.1"></script>
+
+  <script type="text/javascript">
+
+  </script>
+
+
+
+
+  <style>
+    .active {
+      color: red;
+    }
+
+    .item {
+      margin: 4px;
+    }
+
+    .el-col-11 {
+      width: 40%;
+    }
+
+    .el-col-2 {
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .el-form-item__content {
+      margin-left: 80px;
+    }
+
+    .el-icon-arrow-up {
+      background-color: "";
+    }
+
+    #panel {
+      z-index: 9999;
+      position: fixed;
+      background-color: white;
+      max-height: 50%;
+      overflow-y: auto;
+      top: 350px;
+      right: 50px;
+      width: 280px;
+    }
+
+    #panel .amap-call {
+      background-color: #009cf9;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    #panel .amap-lib-driving {
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      overflow: hidden;
+    }
+
+    .amap-ui-control-position-rt,
+    .amap-ui-control-position-tr {
+      top: 8% !important;
+      right: 20px !important;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="mymap">
+    <div id="titlebar">
+      <a class="banner">全国老子相关景区检索平台</a>
+      <div class='heatmap-button'>
+        <input class='heatmap-button' id='heatmap-btn'
+          onclick="window.open('https://maplab.amap.com/share/mapv/c050059126ce081df277ee6aa4fd8e1f')" value='打开热力图' />
+      </div>
+    </div>
+    <div id="search_container">
+
+      <div id="search_input">
+
+        <el-input placeholder="请输入查询内容" v-model="search_content" prefix-icon="el-icon-cold-drink"
+          class="input-with-select" clearable style="width: 55%; margin-right: -5px;">
+          <!-- <el-select v-model="select" slot="prepend" placeholder="请选择">
+            <el-option label="餐厅名" value="1"></el-option>
+            <el-option label="订单号" value="2"></el-option>
+            <el-option label="用户电话" value="3"></el-option>
+          </el-select> -->
+
+        </el-input>
+
+        <div style="display: inline-block;">
+          <el-tooltip class="item" effect="dark" content="查询" placement="bottom">
+            <el-button icon="el-icon-search" @click="search_spots"
+              style="margin-left: 0;float: left;margin-right: -1px;"></el-button>
+          </el-tooltip>
+
+          <el-tooltip class="item" effect="dark" content="更多查询条件" placement="bottom">
+            <el-button icon="el-icon-more" @click="show_morequery"
+              style="margin-left: 0;float: left;margin-right: -1px;"></el-button>
+          </el-tooltip>
+          <el-tooltip class="item" effect="dark" content="清除所有查询" placement="bottom">
+            <el-button icon="el-icon-close" @click="close_all" style="margin-left: 0;"></el-button>
+          </el-tooltip>
+        </div>
+
+      </div>
+
+      <!-- 这里是el的form 用于放置附加的查询信息 -->
+      <div id="search_input2" style="display: none;">
+        <el-form ref="query_form" :model="query_form" :label-position="labelPosition">
+
+          <el-form-item label="景区省份">
+            <el-select v-model="query_form.province" placeholder="请选择景区所属省份" multiple filterable default-first-option>
+              <el-option v-for="item in province_options" :key="item.value" :label="item.label" :value="item.value">
+              </el-option>
+            </el-select>
+
+          </el-form-item>
+          <el-form-item label="消费">
+            <el-col :span="11">
+              <el-input placeholder="最低价格" v-model="query_form.lowPrice" clearable style="width: 100%;"></el-input>
+            </el-col>
+            <el-col class="line" :span="2">-</el-col>
+            <el-col :span="11">
+              <el-input placeholder="最高价格" v-model="query_form.highPrice" clearable style="width: 100%;"></el-input>
+            </el-col>
+          </el-form-item>
+
+          <el-form-item label="评分">
+            <el-slider v-model="query_form.Scores" range :step="0.1" show-stops :max="5" style="width: 85%;">
+            </el-slider>
+          </el-form-item>
+
+        </el-form>
+      </div>
+
+      <!-- 用于显示查询结果的列表 -->
+      <div id="result_lst" style="display: none;">
+        <div id="result_content">
+
+        </div>
+        <div id="click_divider" @click="close_drawer">
+          <i class="el-icon-arrow-up" v-show="result_lst"></i>
+          <i class="el-icon-arrow-down" v-show="!result_lst"></i>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- 用于单个经典的详情信息的显示 -->
+    <div id="single_spot" style="display: none;">
+      <div id="returnfixed" v-text="btntext" @click="closeinfo">
+
+      </div>
+      <div id="placeimg" v-bind:style="singlespot_imgstyle">
+
+      </div>
+      <div class="spottitle">
+        <div id="btn_planto" @click="plandrive">去这里</div>
+        <h3 class="spotname" v-text="spotname"><span>这是个小名</span></h3>
+        <!-- 显示星级rating -->
+        <span class="ratingbox">
+          <el-rate v-model="rating" disabled show-score text-color="#ff0000">
+          </el-rate>
+        </span>
+        <span class="pricebox">
+          <b v-text="price"></b>/人
+        </span>
+        <span class="spot_tags">
+          <el-tag v-for="tag in poitags" :key="tag" type="success" effect="dark" size="mini" v-text="tag">
+          </el-tag>
+        </span>
+      </div>
+
+      <div class="spotinfo">
+        <div class="detailed_location">
+          <span id="locationicon">
+            <i class="el-icon-map-location" style="font-size: 18px;color: #5f5f5f;"></i>
+          </span>
+          <p class="detailaddress" v-text="detail_address"></p>
+        </div>
+        <div class="phone">
+          <span id="phoneicon">
+            <i class="el-icon-phone" style="font-size: 18px;color: #252525;"></i>
+          </span>
+          <p class="phonenumber" v-text="phone_number"></p>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="plan_to" style="display: none;">
+      <div class="plan_form">
+        <div class="planmethods">
+          <li>
+            <el-tooltip class="item" effect="dark" content="驾车" placement="bottom">
+              <a class="carbtn" v-bind:style="{opacity:driveopacity}" @click="setmethod('car')"></a>
+            </el-tooltip>
+          </li>
+          <li>
+            <el-tooltip class="item" effect="dark" content="公交(仅支持同一城市内查询)" placement="bottom">
+              <a class="busbtn" v-bind:style="{opacity:busopacity}" @click="setmethod('bus')"></a>
+            </el-tooltip>
+          </li>
+
+        </div>
+        <el-tooltip class="item" effect="dark" content="返回" placement="bottom">
+          <i class="el-icon-close" id="plan_close" @click="closeplan"></i>
+        </el-tooltip>
+
+        <div class="search_line">
+          <div class="line-search-form">
+            <p id="searchline_start">
+              <label>起</label>
+              <input type="text" id="search_input_start" class="search_line_input" placeholder="请输入起点"
+                v-model="startplace">
+              </input>
+              <span class="del-item" @click="deltext('start')"></span>
+            </p>
+            <p id="searchline_end">
+              <label>终</label>
+              <input type="text" id="search_input_end" class="search_line_input" placeholder="请输入终点" v-model="endplace">
+              </input>
+              <span class="del-item" @click="deltext('end')"></span>
+            </p>
+            <p class="search-submit" style="background:none">
+              <el-button type="primary" size="small" class="submitbtn" id="clearplan" @click="clear_driving">清除路线
+              </el-button>
+              <el-button type="primary" size="small" class="submitbtn" id="methodsto" @click="plan_route"
+                v-text="zenmequ"></el-button>
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div id="panel"></div>
+
+
+
+  </div>
+
+
+</body>
+<script type="text/javascript" src="../static/scripts/main.js"></script>
+
+</html>

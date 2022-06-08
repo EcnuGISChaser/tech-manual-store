@@ -1,0 +1,544 @@
+html, body {background-color:#FFF; width:100%;height : 100%; margin:0px; padding:0px;
+	font-family:"Helvetica Neue", Helvetica, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans","wenquanyi micro hei","Hiragino Sans GB", "Hiragino Sans GB W3", Arial, sans-serif;}
+div {margin:0; padding:0; border:0;}
+
+
+.amap-icon img,
+        .amap-marker-content img{
+            width: 25px;
+            height: 34px;
+        }
+
+        .marker {
+            position: absolute;
+            top: -20px;
+            right: -118px;
+            color: #fff;
+            padding: 4px 10px;
+            box-shadow: 1px 1px 1px rgba(10, 10, 10, .2);
+            white-space: nowrap;
+            font-size: 12px;
+            font-family: "";
+            background-color: #25A5F7;
+            border-radius: 3px;
+        }
+
+		input::-webkit-input-placeholder{
+
+			color:rgb(240, 240, 240);
+		  
+		  }
+		  
+		  input::-moz-placeholder{   /* Mozilla Firefox 19+ */
+		  
+			color:rgb(240, 240, 240);
+		  
+		  }
+		  
+		  input:-moz-placeholder{    /* Mozilla Firefox 4 to 18 */
+		  
+			color:rgb(240, 240, 240);
+		  
+		  }
+		  
+		  input:-ms-input-placeholder{  /* Internet Explorer 10-11 */
+		  
+			color:rgb(240, 240, 240);
+		  }
+
+/*滚动条宽 长,滚动条整体部分，其中的属性有width,height,background,border等。*/
+::-webkit-scrollbar{
+	width: 7px;
+}
+/*滚动条的滑轨背景颜色,可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。*/
+::-webkit-scrollbar-track{
+  background-color: #f5f5f5;
+  -webkit-box-shadow:inset 0 0 3px rgba(0,0,0,0.1);
+  border-radius:5px;
+}
+
+/* 滑块颜色 */
+::-webkit-scrollbar-thumb{
+   background-color: rgba(0, 0, 0, 0.2);
+   border-radius: 5px;
+}
+
+/*滚动条两端的按钮。可以用display:none让其不显示，也可以添加背景图片，颜色改变显示效果。*/
+::-webkit-scrollbar-button{
+   background-color: #eee;
+   display: none;
+}
+
+/* 横向滚动条和纵向滚动条相交处尖角的颜色 */
+::-webkit-scrollbar-corner{
+   background-color: black;
+}
+
+#titlebar{
+	z-index: 999;
+	position: absolute;
+	width: 100%;
+	height: 6%;
+	top: 0;
+	background: #7777778f;
+	display: flex;
+	align-items: center;
+}
+a.banner {
+	font-size:26px;
+	text-decoration:none;
+	font-weight:600;
+	color:#FFF;
+	margin-left:40px;
+	letter-spacing:10px;
+}
+
+/* 热力图*/
+div.heatmap-button {
+	position:absolute;
+	z-index:100;
+	float:right;
+	/* top:9px; */
+	right:40px;
+	width:auto;
+	height:auto;
+}
+input.heatmap-button {
+	width:160px;
+	height:auto;
+	color:#FFF;
+    background-color:rgb(175, 172, 170);
+    padding:4px 2px 4px 10px;
+    font-size: 20px;
+    font-weight:600;
+    letter-spacing:4px;
+    cursor: pointer;
+    border-radius: 4px;
+    border:0px;
+    vertical-align:center;
+    text-align:center;
+    display:block;
+    position:relative;
+    float:left;
+}
+
+#mymap{
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	height: 100%;
+}
+#search_container{
+	position: absolute;
+	z-index: 20;
+	top: 8%;
+	left: 2%;
+	width: 420px;
+	/* height: 500px; */
+	border-radius: 5px;
+	/* box-shadow: 0 4px 14px 0 rgba(0,0,0,.1);
+	background:rgba(155, 151, 151, 0.3); */
+}
+#search_input2{
+	position: relative;
+	width: 368px;	
+	border-radius: 5px;
+	box-shadow: 0 4px 14px 0 rgba(0,0,0,.1);
+	/* background:rgba(155, 151, 151, 0.4); */
+	backdrop-filter: blur(20px);
+	padding: 14px;
+	margin: 10px 0 0 0;
+}
+.el-input-group__append, .el-input-group__prepend {
+	border: 0 !important;
+}
+#result_lst{
+	transition: height 0.5s;
+	z-index:100;
+	overflow:auto;
+	position:relative;
+	padding: 14px;
+	margin: 10px 0 0 0;
+	/* left:30px; */
+	/* background:rgba(255,140,0,0.6); */
+	backdrop-filter: blur(20px);
+	box-shadow: 0 4px 14px 0 rgba(0,0,0,.1);
+	width: 368px;
+	height:500px;
+	/* border:2px solid #FFF; */
+    /* border-radius:8px; */
+}
+
+#click_divider {
+	margin: auto;
+	text-align: center;
+	vertical-align: middle;
+	position:absolute;
+	bottom: 10px;
+	width: inherit;
+	cursor: pointer;
+  }
+  #result_content{
+	transition: height 0.5s;
+	width: inherit;
+	overflow-y: auto;
+	/* padding: 5px; */
+	/* background-color: rgba(134, 129, 129, 0.493); */
+	height: 480px;
+	/* border-radius:5px; */
+  }
+  /* 景区列表中每一个景区项容器的css属性 */
+  .result_content_item{
+	  position: relative;
+	  padding: 10px 8px 6px 8px;
+	  cursor: pointer;
+	  border-top: 1px solid #eaeaea;
+	  /* border-radius: 5px; */
+
+  }
+  .spot_item_title{
+	display: block;
+    font-size: 16px;
+	margin:2px 0 6px 0;
+	
+  }
+  .spot_item_info{
+	  font-size: 12px;
+	  margin:6px 2px
+  }
+  .spot_rate{
+	color: #999;
+    line-height: 24px;
+    max-height: 78px;
+    text-overflow: ellipsis;
+    max-width: 285px;
+    overflow: hidden;
+  }
+  .spot_address{
+	color: #999;
+    line-height: 22px;
+    max-height: 78px;
+    text-overflow: ellipsis;
+    max-width: 285px;
+    overflow: hidden;
+  }
+  .spotitem_imgbox{
+	width: 100px;
+    height: 74px;
+    vertical-align: top;
+    float: right;
+    margin: 0px 8px;
+    overflow: hidden;
+  }
+  .spotitem_imgbox .spotitem_img{
+	display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: 50%;
+  }
+  #single_spot{
+	  z-index: 999;
+	/* transition: height 0.5s; */
+	position:absolute;
+	width: 350px;
+	/* height:320px; */
+	overflow-y: auto;
+	padding: 0 0 14px 0;
+	/* margin: 10px 0 0 0; */
+	/* left:30px; */
+	top:14%;
+	right: 50px;
+	/* background:rgba(255,140,0,0.6); */
+	/* backdrop-filter: blur(20px); */
+	background: #fff;
+	box-shadow: 0 4px 14px 0 rgba(0,0,0,.1);
+	/* padding: 5px; */
+	/* background-color: rgba(134, 129, 129, 0.493); */
+	border-radius:5px;
+  }
+
+  #single_spot #returnfixed{
+	z-index: 10001;
+    padding: 3px 7px 3px 5px;
+    cursor: pointer;
+    font-size: 13px;
+    display: inline-block;
+    background-color: rgba(51,51,51,.5);
+    border-radius: 2px;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  #single_spot #returnfixed:hover{
+	box-shadow: 0px 1px 3px 0 rgb(0 0 0 / 20%)
+  }
+  #placeimg{
+	height: 160px;
+	width: 100%;
+    background-color: #eee;
+    position: relative;
+	background-size: cover;
+    background-position: 50%;
+  }
+  .spottitle{
+	padding: 10px 0;
+	position: relative;
+    /* height: 60px; */
+    width: 100%;
+    z-index: 10;
+    color: #333;
+    background-image: linear-gradient(180deg,hsla(0,0%,100%,.97) 0,#fff 25%,#fff);
+  }
+  #btn_planto{
+	position: absolute;
+    right: 8px;
+    top: -26px;
+    width: 54px;
+    height: 54px;
+    line-height: 72px;
+    text-align: center;
+    background: #0e89f5;
+    background-image: url(/static/Markers/dirnew_white.png);
+    background-size: 15.5px 18px;
+    background-position: 50% 22%;
+    background-repeat: no-repeat;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 30%);
+    transition: box-shadow .15s cubic-bezier(.4,0,1,1);
+	font-size: 10px;
+  }
+  #btn_planto:hover{
+	box-shadow: 2px 2px 8px 0 rgb(0 0 0 / 50%)
+  }
+
+  h3{
+	font-weight: 400;
+    margin: 0;
+  }
+  .spottitle .spotname{
+	font-family: Microsoft Yahei;
+    padding: 6px 0;
+    text-indent: 10px;
+    color: #333;
+    font-size: 15px;
+    max-width: 292px;
+    /* height: 20px; */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .ratingbox{
+	display: inline-block;
+	margin-left: 8px;
+    vertical-align: middle;
+	/* background-size: 13px; */
+  }
+  .pricebox{
+	display: inline-block;
+    margin-left: 6px;
+    color: #939392;
+	font-size: 12px;
+  }
+  .pricebox b {
+    font-weight: 400;
+}
+.spot_tags{
+	display: block;
+	margin: 6px 0 0 6px;
+    color: #939392;
+	vertical-align: middle;
+}
+.el-tag{
+	margin: 2px 4px;
+}
+.amap-ui-control-position-rt, .amap-ui-control-position-tr {
+	z-index: 9999;
+}
+.spotinfo,.phone{
+	position: relative;
+    background: #fff;
+	font-size: 12px;
+}
+.spotinfo .detailed_location,.phonenumber{
+	position: relative;
+    line-height: 24px;
+    color: #333;
+	display: list-item;
+    text-align: -webkit-match-parent;
+}
+#locationicon,#phoneicon{
+	position: absolute;
+    width: 16px;
+    height: 24px;
+    line-height: 24px;
+    left: 12px;
+    text-align: center;
+	vertical-align: text-bottom;
+	font-size: 16px;
+}
+.spotinfo .detailaddress,.phonenumber{
+	margin: 0 15px 0 40px;
+}
+
+#plan_to{
+	z-index: 999;
+	/* transition: height 0.5s; */
+	position:absolute;
+	width: 350px;
+	/* height:320px; */
+	overflow-y: visible;
+	top:14%;
+	right: 50px;
+	/* backdrop-filter: blur(20px); */
+	background: #fff;
+	box-shadow: 0 4px 14px 0 rgba(0,0,0,.1);
+	/* padding: 5px; */
+	/* background-color: rgba(134, 129, 129, 0.493); */
+	border-radius:5px;
+}
+#plan_to .plan_form{
+	position: relative;
+    padding: 14px;
+    padding-bottom: 20px;
+    background: #3d93fd;
+    /* border-top-left-radius: 3px;
+    border-top-right-radius: 3px; */
+	border-radius:5px;
+}
+#plan_to .planmethods{
+	width: 200px;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    height: 30px;
+    margin: 0 auto;
+    white-space: nowrap;
+}
+.planmethods.planmethods li{
+	height: 30px;
+    width: 50%;
+    line-height: 30px;
+    position: relative;
+    display: block;
+    float: left;
+    text-align: center;
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: .8px;
+}
+.planmethods.planmethods li a{
+	display: inline-block;
+    color: #fff;
+    height: 30px;
+    width: 30px;
+    cursor: pointer;
+	text-align: center;
+    text-indent: 25px;
+}
+
+.planmethods.planmethods li .carbtn{
+	background: url(/static/Markers/icon_car.png)  no-repeat 50%;
+    background-size: 19px 19px;
+	text-align: center;
+    text-indent: 25px;
+	/* background: #ffffff00 !important; */
+    border: 0px !important;
+	opacity: 1
+}
+.planmethods.planmethods li .busbtn{
+	background: url(/static/Markers/icon_bus.png) no-repeat 50%;
+    background-size: 19px 19px;
+	text-align: center;
+    text-indent: 25px;
+	/* background: #ffffff00 !important; */
+    border: 0px !important;
+	opacity: 0.5
+}
+#plan_close{
+	position: absolute;
+    right: 16px;
+    top: 16px;
+    color: #edf8ff;
+    cursor: pointer;
+}
+.search_line{
+	position:relative;
+	margin-top: 15px;
+
+}
+.line-search-form{
+	margin:0 30px;
+}
+.line-search-form p{
+	color: #e1f1ff;
+
+	position: relative;
+    height: 34px;
+    line-height: 34px;
+    width: 270px;
+    font-size: 14px;
+    color: #acd7ff;
+    background-color: #3587eb;
+    border-radius: 2px;
+    margin-bottom: 10px;
+}
+.line-search-form p label{
+	margin-left: 10px;
+}
+.line-search-form p input{
+	width: 78%;
+    height: 34px;
+    line-height: 32px;
+    border: none;
+    background: transparent;
+    text-indent: 5px;
+    color: white;
+    padding: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.line-search-form p .del-item{
+	display: block;
+	position: absolute;
+    height: 14px;
+    width: 14px;
+    background-image: url(/static/Markers/icon_deleipt.png);
+    background-size: 14px 14px;
+    background-repeat: no-repeat;
+    right: 12px;
+    top: 10px;
+    cursor: pointer;
+	opacity: 0.6;
+}
+.line-search-form p .del-item:hover{
+	opacity: 1;
+}
+.search-submit{
+	position: absolute;
+    margin-top: 17px;
+    border-bottom: none;
+    width: 270px;
+	background-color: none;
+	vertical-align: middle;
+}
+.search-submit .submitbtn{
+	/* font-size: 13px; */
+    text-decoration: none;
+    opacity: 1;
+    /* line-height: 32px; */
+}
+#methodsto{
+	display: inline-block;
+    float: right;
+	border: none;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 14px;
+    text-decoration: none;
+    /* box-shadow: 0 1px 1px 0 rgb(0 0 0 / 21%);
+    -webkit-box-shadow: 0 1px 1px 0 rgb(0 0 0 / 21%); */
+}

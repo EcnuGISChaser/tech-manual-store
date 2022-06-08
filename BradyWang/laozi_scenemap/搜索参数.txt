@@ -1,0 +1,29 @@
+中国老子道教相关景区信息平台
+
+https://lbs.amap.com/api/webservice/guide/api/search
+爬虫部分：
+搜索的城市：全中国所有省份（以省份+关键词的形式获取poi数据）
+poi类型：风景名胜（唯一指定大类）博物馆、展览馆、美术馆、文化宫、档案馆
+关键词：道观、道教、老子、老君、太君
+所需提取的关键信息：
+name名称
+type兴趣点类型
+address地址
+location经纬度
+tel POI的电话
+网址
+email
+省份名称
+城市名
+行业类型
+所属商圈
+入口经纬度
+出口经纬度
+alias别名
+tag（poi特色内容）
+深度信息：评分 人均消费
+照片信息：title+url
+
+
+
+
