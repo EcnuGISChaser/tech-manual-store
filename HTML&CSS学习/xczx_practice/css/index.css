@@ -1,0 +1,240 @@
+body{
+    background-color: #f3f5f7;
+}
+
+/* 全局消除默认的margin和padding，改为内减模式 */
+*{
+    margin: 0;
+    padding: 0;
+    /* 内减模式 */
+    box-sizing: border-box;
+}
+
+/* 消除表格的项目符号 */
+li{
+    list-style: none;
+}
+
+/* 清除链接格式 */
+a{
+    text-decoration: none;
+}
+
+/* 清除浮动 */
+.clearfix::before,
+.clearfix::after{
+    content: "";
+    display: table;
+}
+.clearfix::after{
+    clear: both;
+}
+
+/* 版心 */
+.wrapper{
+    width: 1200px;
+    margin: 0 auto;
+}
+
+/* 头部 */
+.header{
+    height: 42px;
+    background-color:#f3f5f7;
+    margin: 30px auto;
+}
+
+/* logo */
+h1{
+    float: left;
+}
+
+/* 导航栏 */
+/* 纯文字可以不给宽度 */
+.nav{
+    float: left;
+    margin-left: 79px;
+
+    height: 42px;
+    background-color: #f3f5f7;
+    line-height: 42px;
+}
+
+.nav li{
+    float: left;
+    /* 疑惑，为什么修改li的下边框颜色时，内减模式就不生效了呢？ */
+    /* padding: 0 9px;
+    margin:0 26px;
+    border-bottom: 2px solid #00a4ff; */
+}
+
+.nav li a{
+    display: inline-block;
+
+    padding: 0 9px;
+    margin:0 12px;
+    height: 42px;
+    line-height: 42px;
+
+    font-size: 18px;
+    color: #2c2a2a;
+}
+
+.nav li a:hover{
+    border-bottom: 2px solid #00a4ff;
+    background-color: rgba(86, 83, 83, 0.103);
+}
+
+/* 搜索栏 */
+.search{
+    float: left;
+
+    margin-left: 59px;
+
+    width: 412px;
+	height: 42px;
+	border: solid 1px #00a4ff;
+}
+
+.search input{
+    float:left;
+    padding-left: 16px;
+    width: 360px;
+    height: 40px;
+    border: 0;
+}
+
+.search input::placeholder{
+    font-size: 14px;
+    color: #202528cd;
+}
+
+.search button{
+    float: left;
+    width: 50px;
+    height: 40px;
+    background-image: url(../images/btn.png);
+    border: none;
+}
+
+/* 用户区域 */
+.user{
+    float: right;
+    margin-right: 30 px;
+    height: 42px;
+    /* background-color: skyblue; */
+    line-height: 42px;
+}
+
+.user img{
+    /* 调节图片垂直对齐方式 */
+    vertical-align: middle;
+}
+
+/* 轮播图 */
+.banner{
+    height: 420px;
+    background-color: rgb(29,3,109);
+}
+
+.banner .wrapper{
+    height: 420px;
+    background-image: url(../images/banner2_20190819_210028.png);
+}
+
+/* 左侧栏 */
+.banner .left {
+    float: left;
+    padding: 0 20px;
+    padding-top: 14px;
+    width: 190px;
+    height: 420px;
+    background-color: rgba(0,0,0,0.3);
+
+    /* 行高控制文字属性，可继承 */
+    line-height: 44px;
+    font-size: 14px;
+}
+
+.banner .left a {
+    display: block;
+    height: 44px;
+    color:#fff;
+}
+.banner .left span{
+    float: right;
+}
+
+.banner .left a:hover {
+    color: #00a4ff;
+}
+
+/* 右侧栏 */
+.banner .right {
+    float: right;
+    margin-top: 50px;
+    width: 228px;
+    height: 300px;
+    background-color: #fff;
+}
+
+.banner .right h2{
+    height: 48px;
+    width: auto;
+    background-color: rgb(155,206,234);
+    line-height: 48px;
+    text-align: center;
+    color: #f3f5f7;
+    font-size: 18px;
+}
+
+.banner .right .content {
+    padding: 0 18px;
+    padding-top: 10px;
+}
+
+.banner .right .content a {
+    display: block;
+    padding: 8px 0;
+    border-bottom: 2px solid #d5d6d6;
+    height: 43;
+}
+
+.banner .right .content a h4,
+.banner .right .content a h5{
+    display: inline-block;
+}
+
+.banner .right .content a h4{
+    margin-right: 4px;
+    font-size: 16px;
+    color: #7a7a7a;
+}
+
+.banner .right .content a h5{
+    font-size: 14px;
+    color: #a6a6a6;
+}
+
+.banner .right .content a p{
+    padding-top: 3px;
+    font-size: 12px;
+    color: #d5d6d6;
+}
+
+.banner .right .allclass{
+    padding: 0 18px;
+}
+
+.banner .right .allclass a{
+    display: block;
+
+    margin-top: 12px;
+    border: 2px solid #00a4ff;
+    height: 41px;
+
+    text-align: center;
+    font-size: 16px;
+	font-weight: bold;
+    color: #00a4ff;
+    line-height: 38px;
+}

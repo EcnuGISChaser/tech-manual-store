@@ -1,0 +1,17 @@
+/* 选择器{} */
+p {
+    color: brown;
+}
+
+.green {
+    color: green;
+}
+
+.font {
+    font-size: 66px;
+}
+
+#radio1 {
+    color: yellowgreen;
+    width: 40px;
+}
