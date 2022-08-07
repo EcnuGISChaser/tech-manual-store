@@ -238,3 +238,153 @@ h1{
     color: #00a4ff;
     line-height: 38px;
 }
+
+.goods {
+    margin-top: 6px;
+    width: 1200px;
+    height: 60px;
+    background-color: #fff;
+    box-shadow: 0px 2px 3px 0px 
+		rgba(118, 118, 118, 0.2);
+}
+
+.goods li a{
+    display: block;
+    float: left;
+    margin: 21px 0;
+    padding: 0 34px;
+    border-right: 2px solid #a6a6a6;
+    height: 18px;
+    font-size: 18px;
+    line-height: 18px;
+    color: #2c2a2a;
+}
+
+.goods li:first-child a{
+    color: #00a4ff;
+}
+
+.goods li:last-child a{
+    border-right: none;
+}
+
+.goods .interest {
+    float: right;
+    display: block;
+    margin: 21px 0;
+    padding: 0 34px;
+    font-size: 15px;
+    line-height: 18px;
+    color: #00a4ff;
+}
+
+/* 精品课程 */
+.box {
+    margin-top: 35px;
+}
+
+.box .title {
+    height: 40px;
+    /* background-color: #fff; */
+}
+
+.box .title h2 {
+    float: left;
+    font-size: 20px;
+    color: #494949;
+    font-weight: 400;
+}
+.box .title a {
+    float: right;
+    margin-right: 30px;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #a5a5a5;
+}
+
+.box .content li {
+    float: left;
+    margin-right: 15px;
+    margin-bottom: 15px;
+    height: 270px;
+    width: 228px;
+    background-color: #fff;
+}
+
+.box .content li:nth-child(5n) {
+    margin-right: 0;
+}
+
+.box .content li h3 {
+    padding: 20px;
+    font-size: 14px;
+    color: #050505;
+}
+
+.box .content li p {
+    padding: 0 20px;
+    font-size: 11px;
+    color: #999;
+}
+
+.box .content li span {
+    color: orange;
+    font-weight: 700;
+}
+
+.box .content img {
+    width: 100%;
+}
+
+/* 版权栏目 */
+.footer {
+    margin-top: 40px;
+    padding: 30px;
+    height: 417px;
+    background-color: #fff;
+}
+
+.footer .left {
+    float: left;
+}
+
+.footer .left p {
+    margin: 20px 10px;
+    color: #d5d6d6;
+    font-size: 12px;
+}
+
+.footer .left a {
+    display: inline-block;
+    border: 2px solid #00a4ff;
+    width: 120px;
+    height: 36px;
+    background-color: #fff;
+    line-height: 33px;
+    font-weight: 500;
+    text-align: center;
+    color: #00a4ff;
+}
+
+.footer .right {
+    float:right;
+}
+
+.footer .right dl {
+    float: right;
+    margin-left: 127px;
+}
+
+.footer .right dl dt {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #050505;
+}
+
+.footer .right dl a {
+    display: block;
+    line-height: 40px;
+    font-size: 16px;
+    color: #7a7a7a;
+}
+
